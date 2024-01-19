@@ -191,8 +191,8 @@ public class PassCryptAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
-        public Button messageButton;
+        public final TextView nameTextView;
+        public final Button messageButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview

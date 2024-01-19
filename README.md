@@ -1,2 +1,2 @@
 # PassCrypt
-PassCrypt Android App
+Android PassCrypt App
