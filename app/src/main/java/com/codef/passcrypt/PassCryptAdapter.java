@@ -1,5 +1,6 @@
 package com.codef.passcrypt;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.text.InputType;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -92,6 +94,7 @@ public class PassCryptAdapter extends
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     public void askUserForCredentials(Context context, String credentialName) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -100,6 +103,26 @@ public class PassCryptAdapter extends
 
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye, 0);
+
+        input.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (input.getRight() - input.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    // Toggle password visibility
+                    if (input.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    } else {
+                        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+                    input.setSelection(input.getText().length()); // Keep cursor at end
+                    return true;
+                }
+            }
+            return false;
+        });
+
+
         builder.setView(input);
 
         // Set up the buttons
