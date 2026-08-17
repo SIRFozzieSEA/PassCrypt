@@ -129,6 +129,7 @@ public class PassCryptAdapter extends
         builder.setPositiveButton("OK", (dialog, which) -> {
             try {
                 String userInput = input.getText().toString();
+                // TODO:  Find a better way of making sure user is authorized
                 if (userInput.equals(readCryptKey(R.raw.passcrypt))) {
                     String cryptKey = readCryptKey(R.raw.secret);
                     int credResourceId = resourceMap.get(credentialName.toLowerCase());
